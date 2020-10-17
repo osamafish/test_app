@@ -1,5 +1,11 @@
 class PagesController < ApplicationController
-    # def home #first attempt
-    #     render html: "Hello world"
-    # end
+
+
+    def home
+    end
+
+    def about
+    end
+
+
 end
