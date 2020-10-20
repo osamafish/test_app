@@ -1,0 +1,2 @@
+class Articale < ApplicationRecord
+end

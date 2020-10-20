@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Articales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>link</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @articales.each do |articale| %>
+      <tr>
+        <td><%= articale.title %></td>
+        <td><%= articale.link %></td>
+        <td><%= articale.description %></td>
+        <td><%= link_to 'Show', articale %></td>
+        <td><%= link_to 'Edit', edit_articale_path(articale) %></td>
+        <td><%= link_to 'Destroy', articale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Articale', new_articale_path %>
