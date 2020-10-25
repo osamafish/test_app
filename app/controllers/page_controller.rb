@@ -1,4 +1,4 @@
+#Test cmd, controler not in use
 class PageController < ApplicationController
-   #not in use
 
 end
