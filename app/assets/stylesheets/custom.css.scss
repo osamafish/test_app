@@ -24,7 +24,9 @@
 
 
 .jumbotron {
-    //background-image: url(jumbimg.jpg);
+    //background-image: url(jumbimg.jpg); 
+    //not work, abs path???
+    //--todo--
     background-image: asset-url('jumbimg.jpg');
     background-position: center center;
     background-repeat: no-repeat;
