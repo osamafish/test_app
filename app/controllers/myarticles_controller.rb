@@ -59,6 +59,7 @@ class MyarticlesController < ApplicationController
         else
             @error = @article.errors.full_messages
             render 'new'
+                           
         end
 
         # --I just pass @error to html.erb where it doesn't have to call.errors,-- 

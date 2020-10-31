@@ -1,4 +1,4 @@
 # README
 * Added Git v2
-2020-10-17
-5:26pm
+2020-10-30
+section 5 done.
