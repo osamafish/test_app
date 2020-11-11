@@ -1,22 +1,26 @@
 <h2 class="text-center mt-4">
-  <%= @article.title %>
+  <%= @myarticle.title %>
 </h2>
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-8 mt-4">
     <div class="card text-center shaw mb-5 bg-white rounded">
-              <div class="card-header font-italic">
-          by Mashrur Hossain
+        <div class="card-header font-italic">
+          by <%= @myarticle.myuser.username if @myarticle.myuser %>
+          <%= link_to gravatar_for(@myarticle.myuser), myuser_path(@myarticle.myuser) %>
         </div>
-
           <div class="card-body">
-          <div class="card-text text-left"><%= simple_format(@article.description) %></div>
-          <%= link_to "Edit", edit_myarticle_path(@article), class: "btn btn-outline-info" %>
-          <%= link_to "Delete", myarticle_path(@article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <div class="card-text text-left"><%= simple_format(@myarticle.description) %></div>
+
+            <% if logged_in? && (@myarticle.myuser == current_user || current_user.admin?) %>
+              <%= link_to "Edit", edit_myarticle_path(@myarticle), class: "btn btn-outline-info" %>
+              <%= link_to "Delete", myarticle_path(@myarticle), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+            <% end %>
+
         </div>
         <div class="card-footer text-muted">
-          <small>Created <%= time_ago_in_words(@article.created_at) %> ago, 
-          edited <%= time_ago_in_words(@article.updated_at) %> ago</small>
+          <small>Created <%= time_ago_in_words(@myarticle.created_at) %> ago, 
+          edited <%= time_ago_in_words(@myarticle.updated_at) %> ago</small>
         </div>
     </div>
     </div>

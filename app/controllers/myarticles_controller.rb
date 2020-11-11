@@ -1,6 +1,9 @@
 class MyarticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
 
+    before_action :require_user, except: [:show, :index]
+    before_action :require_same_user, only: [:edit, :update, :destroy]
+
     #article_params
     
     def show
@@ -8,11 +11,12 @@ class MyarticlesController < ApplicationController
     end
 
     def index
-        @articles = Myarticle.all
+        # @myarticles = Myarticle.all
+        @myarticles = Myarticle.paginate(page: params[:page], per_page: 3)
     end
 
     def new
-        @article = Myarticle.new()
+        @myarticle = Myarticle.new()
         # not necessary to declare here
         # if we do passing error directly
         # without call .error in html.erb
@@ -27,9 +31,9 @@ class MyarticlesController < ApplicationController
     def update
         #byebug
         #set_article
-        if @article.update(article_params)
+        if @myarticle.update(myarticle_params)
           flash[:notice] = "Article was updated successfully."
-          redirect_to @article
+          redirect_to @myarticle
         else
           render 'edit'
         end
@@ -37,7 +41,7 @@ class MyarticlesController < ApplicationController
 
     def destroy
         #set_article
-        @article.destroy
+        @myarticle.destroy
         redirect_to myarticles_path
     end
 
@@ -52,12 +56,14 @@ class MyarticlesController < ApplicationController
         # d = params[:myarticle][:description]       
         # article = Myarticle.new(title:t, description:d)
 
-        @article = Myarticle.new(article_params)
-        if @article.save
+        @myarticle = Myarticle.new(myarticle_params)
+        # @myarticle.myuser = Myuser.first
+        @myarticle.myuser = current_user
+        if @myarticle.save
             flash[:notice] = "Article was created successfully."
-            redirect_to @article
+            redirect_to @myarticle
         else
-            @error = @article.errors.full_messages
+            @error = @myarticle.errors.full_messages
             render 'new'
                            
         end
@@ -89,13 +95,21 @@ class MyarticlesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Myarticle.find(params[:id])
+      @myarticle = Myarticle.find(params[:id])
 
     end
 
     # Only allow a list of trusted parameters through.
-    def article_params
+    def myarticle_params
         params.require(:myarticle).permit(:title, :description)
     end
+
+    def require_same_user
+        # if current_user != @myrticle.user
+        if current_user != @myarticle.myuser && !current_user.admin?
+          flash[:alert] = "You can only edit or delete your own article"
+          redirect_to @myarticle
+        end
+      end
 end
   
