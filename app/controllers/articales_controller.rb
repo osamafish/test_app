@@ -70,6 +70,8 @@ class ArticalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def articale_params
-      params.require(:articale).permit(:title, :link, :description)
-    end
+      # params.require(:articale).permit(:title, :link, :description)
+      params.require(:article).permit(:title, :description, category_ids: [])
+    end    
 end
+My

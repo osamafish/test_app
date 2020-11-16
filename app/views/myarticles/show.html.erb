@@ -9,15 +9,25 @@
           by <%= @myarticle.myuser.username if @myarticle.myuser %>
           <%= link_to gravatar_for(@myarticle.myuser), myuser_path(@myarticle.myuser) %>
         </div>
-          <div class="card-body">
-            <div class="card-text text-left"><%= simple_format(@myarticle.description) %></div>
+        <% if @myarticle.categories.any? %>
+          <div class="mt-2">
+                 <%= render @myarticle.categories %>
+                
+                 <%# <%= render [@myarticle.categories.first, @myarticle.categories.first, @myarticle.categories.first, @myarticle.categories.last] %> 
+     
+            </div> 
+        <% end %>
 
-            <% if logged_in? && (@myarticle.myuser == current_user || current_user.admin?) %>
-              <%= link_to "Edit", edit_myarticle_path(@myarticle), class: "btn btn-outline-info" %>
-              <%= link_to "Delete", myarticle_path(@myarticle), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
-            <% end %>
 
-        </div>
+        <div class="card-body">
+          <div class="card-text text-left"><%= simple_format(@myarticle.description) %></div>
+
+          <% if logged_in? && (@myarticle.myuser == current_user || current_user.admin?) %>
+            <%= link_to "Edit", edit_myarticle_path(@myarticle), class: "btn btn-outline-info" %>
+            <%= link_to "Delete", myarticle_path(@myarticle), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+          <% end %>
+
+      </div>
         <div class="card-footer text-muted">
           <small>Created <%= time_ago_in_words(@myarticle.created_at) %> ago, 
           edited <%= time_ago_in_words(@myarticle.updated_at) %> ago</small>

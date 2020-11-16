@@ -101,7 +101,9 @@ class MyarticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def myarticle_params
-        params.require(:myarticle).permit(:title, :description)
+        # params.require(:myarticle).permit(:title, :description)
+        params.require(:myarticle).permit(:title, :description, category_ids: [])
+
     end
 
     def require_same_user
