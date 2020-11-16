@@ -74,4 +74,3 @@ class ArticalesController < ApplicationController
       params.require(:article).permit(:title, :description, category_ids: [])
     end    
 end
-My
